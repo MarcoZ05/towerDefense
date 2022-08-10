@@ -53,7 +53,7 @@ export default class TowerClass {
     let profit = 0
 
     enemiesInRange.forEach(enemy => {
-    const returnValue = enemy.hit(this.attackDamage)
+      const returnValue = enemy.hit(this.attackDamage)
       if (returnValue.killed) {
         profit++
       }
@@ -62,9 +62,7 @@ export default class TowerClass {
     return profit
   }
 
-  onclick (): void {
-    console.log('clicked')
-  }
+  onclick (): void {}
 
   enemiesInRange (enemies: Array<EnemyClass> = []): Array<EnemyClass> {
     return enemies.filter(enemy => {

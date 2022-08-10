@@ -34,11 +34,9 @@ export default class EnemyClass {
   }
 
   move (enemiesPath: Array<PositionInterface>): void {
-    //TODO
     const isOnPath: boolean = false
 
     if (isOnPath) {
-      //TODO
     } else {
       this.position.x =
         enemiesPath[0].x < this.position.x

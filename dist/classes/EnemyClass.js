@@ -12,10 +12,8 @@ export default class EnemyClass {
         this.popBloons = popBloons;
     }
     move(enemiesPath) {
-        //TODO
         const isOnPath = false;
         if (isOnPath) {
-            //TODO
         }
         else {
             this.position.x =

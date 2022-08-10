@@ -34,9 +34,7 @@ export default class TowerClass {
         });
         return profit;
     }
-    onclick() {
-        console.log('clicked');
-    }
+    onclick() { }
     enemiesInRange(enemies = []) {
         return enemies.filter(enemy => {
             const R = this.attackRange;

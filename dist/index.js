@@ -22,30 +22,25 @@ const enemyPath = enemyPaths.standart;
 render.addEnemyPath(enemyPath);
 game.addEnemyPath(enemyPath);
 const tower = new towers.dartMonkey({ x: 100, y: 200 });
-render.addTower(tower);
-game.addTower(tower);
+tower.image.onload = () => {
+    render.addTower(tower);
+    game.addTower(tower);
+};
 const greenBloon = new enemies.greenBloon({ x: 0, y: 250 });
-render.addEnemy(greenBloon);
-game.addEnemy(greenBloon);
+greenBloon.image.onload = () => {
+    render.addEnemy(greenBloon);
+    game.addEnemy(greenBloon);
+};
 let passedRenderSeconds = 0;
 let lastRenderSeconds = 0;
 function renderLoop(timeStamp) {
     return __awaiter(this, void 0, void 0, function* () {
         passedRenderSeconds = (timeStamp - lastRenderSeconds) / 1000;
         if (passedRenderSeconds >= 10 / consants.FPS) {
-            render.render(canvas);
+            yield render.render(canvas);
             lastRenderSeconds = timeStamp;
         }
         window.requestAnimationFrame(renderLoop);
     });
 }
 window.requestAnimationFrame(renderLoop);
-// let passedGameSeconds: number = 0
-// let lastGameSeconds: number = 0
-// function gameLoop (timeStamp: number) {
-//   passedGameSeconds = (timeStamp - lastGameSeconds) / 1000
-//   lastGameSeconds = timeStamp
-//   if (passedGameSeconds >= consants.FPS) render.render(canvas)
-//   window.requestAnimationFrame(gameLoop)
-// }
-// window.requestAnimationFrame(gameLoop)

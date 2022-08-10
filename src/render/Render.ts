@@ -7,11 +7,11 @@ import {
 } from '../interfaces.js'
 
 export default class Render {
-  towers: Array<RenderObjectInterface> = []
-  enemies: Array<RenderObjectInterface> = []
-  enemyPath: Array<PositionInterface> = []
+  towers: RenderObjectInterface[] = []
+  enemies: RenderObjectInterface[] = []
+  enemyPath: PositionInterface[] = []
 
-  addEnemyPath (enemyPath: Array<PositionInterface>): void {
+  addEnemyPath (enemyPath: PositionInterface[]): void {
     this.enemyPath = enemyPath
   }
 
@@ -46,34 +46,23 @@ export default class Render {
         ctx.lineWidth = 50
         ctx.strokeStyle = 'beige'
         ctx.moveTo(position.x, position.y)
-      } else {
-        ctx.lineTo(position.x, position.y)
-      }
+      } else ctx.lineTo(position.x, position.y)
     })
 
-    const renderObjects = [...this.towers, ...this.enemies]
-    for (let index = 0; index < renderObjects.length; index++) {
-      const renderObject = renderObjects[index]
-
-      this.loadImage(renderObject.image).then(image => {
-        ctx.drawImage(
-          image,
-          renderObject.position.x,
-          renderObject.position.y,
-          renderObject.width,
-          renderObject.height
-        )
-      })
-    }
+    const renderObjects: RenderObjectInterface[] = [
+      ...this.towers,
+      ...this.enemies
+    ]
+    renderObjects.forEach(async renderObject => {
+      ctx.drawImage(
+        renderObject.image,
+        renderObject.position.x,
+        renderObject.position.y,
+        renderObject.width,
+        renderObject.height
+      )
+    })
 
     ctx.stroke()
-  }
-
-  async loadImage (image: HTMLImageElement): Promise<HTMLImageElement> {
-    return new Promise(resolve => {
-      image.onload = () => {
-        resolve(image)
-      }
-    })
   }
 }

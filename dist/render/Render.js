@@ -44,27 +44,17 @@ export default class Render {
                     ctx.strokeStyle = 'beige';
                     ctx.moveTo(position.x, position.y);
                 }
-                else {
+                else
                     ctx.lineTo(position.x, position.y);
-                }
             });
-            const renderObjects = [...this.towers, ...this.enemies];
-            for (let index = 0; index < renderObjects.length; index++) {
-                const renderObject = renderObjects[index];
-                this.loadImage(renderObject.image).then(image => {
-                    ctx.drawImage(image, renderObject.position.x, renderObject.position.y, renderObject.width, renderObject.height);
-                });
-            }
+            const renderObjects = [
+                ...this.towers,
+                ...this.enemies
+            ];
+            renderObjects.forEach((renderObject) => __awaiter(this, void 0, void 0, function* () {
+                ctx.drawImage(renderObject.image, renderObject.position.x, renderObject.position.y, renderObject.width, renderObject.height);
+            }));
             ctx.stroke();
-        });
-    }
-    loadImage(image) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return new Promise(resolve => {
-                image.onload = () => {
-                    resolve(image);
-                };
-            });
         });
     }
 }
