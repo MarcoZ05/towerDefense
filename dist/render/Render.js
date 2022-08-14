@@ -12,6 +12,7 @@ export default class Render {
         this.towers = [];
         this.enemies = [];
         this.enemyPath = [];
+        this.projectiles = [];
     }
     addEnemyPath(enemyPath) {
         this.enemyPath = enemyPath;
@@ -26,11 +27,17 @@ export default class Render {
     }
     addEnemy(enemy) {
         const renderObject = {};
-        renderObject.image = enemy.image;
         renderObject.position = enemy.position;
+        renderObject.image = enemy.image;
         renderObject.width = enemy.width;
         renderObject.height = enemy.height;
         this.enemies.push(renderObject);
+    }
+    addProjectile(projectile) {
+        this.projectiles.push({
+            position: projectile.position,
+            size: projectile.size
+        });
     }
     render(canvas) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -47,14 +54,20 @@ export default class Render {
                 else
                     ctx.lineTo(position.x, position.y);
             });
-            const renderObjects = [
-                ...this.towers,
-                ...this.enemies
-            ];
-            renderObjects.forEach((renderObject) => __awaiter(this, void 0, void 0, function* () {
+            ctx.stroke();
+            this.towers.forEach((renderObject) => __awaiter(this, void 0, void 0, function* () {
                 ctx.drawImage(renderObject.image, renderObject.position.x, renderObject.position.y, renderObject.width, renderObject.height);
             }));
-            ctx.stroke();
+            this.enemies.forEach((renderObject) => __awaiter(this, void 0, void 0, function* () {
+                ctx.drawImage(renderObject.image, renderObject.position.x - renderObject.width / 2, renderObject.position.y - renderObject.height / 2, renderObject.width, renderObject.height);
+            }));
+            this.projectiles.forEach((renderObject) => __awaiter(this, void 0, void 0, function* () {
+                ctx.beginPath();
+                ctx.arc(renderObject.position.x, renderObject.position.y, renderObject.size, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.stroke();
+            }));
+            ctx.closePath();
         });
     }
 }

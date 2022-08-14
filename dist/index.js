@@ -11,26 +11,13 @@ import * as consants from './constants.js';
 import Render from './render/Render.js';
 import Game from './game/Game.js';
 import * as enemyPaths from './enemyPaths.js';
-import * as towers from './towers.js';
-import * as enemies from './enemies.js';
 const canvas = document.querySelector('canvas');
 canvas.width = consants.CANVAS_WIDTH;
 canvas.height = consants.CANVAS_HEIGHT;
 const render = new Render();
 const game = new Game();
-const enemyPath = enemyPaths.standart;
-render.addEnemyPath(enemyPath);
-game.addEnemyPath(enemyPath);
-const tower = new towers.dartMonkey({ x: 100, y: 200 });
-tower.image.onload = () => {
-    render.addTower(tower);
-    game.addTower(tower);
-};
-const greenBloon = new enemies.greenBloon({ x: 0, y: 250 });
-greenBloon.image.onload = () => {
-    render.addEnemy(greenBloon);
-    game.addEnemy(greenBloon);
-};
+initPath(enemyPaths.standart);
+// Renderings
 let passedRenderSeconds = 0;
 let lastRenderSeconds = 0;
 function renderLoop(timeStamp) {
@@ -44,3 +31,29 @@ function renderLoop(timeStamp) {
     });
 }
 window.requestAnimationFrame(renderLoop);
+// Game Logic
+let passedGameSeconds = 0;
+let lastGameSeconds = 0;
+function gameLoop(timeStamp) {
+    return __awaiter(this, void 0, void 0, function* () {
+        passedGameSeconds = (timeStamp - lastGameSeconds) / 1000;
+        if (passedGameSeconds >= 10 / consants.TPS) {
+            game.update();
+            lastGameSeconds = timeStamp;
+        }
+        window.requestAnimationFrame(gameLoop);
+    });
+}
+window.requestAnimationFrame(gameLoop);
+function initPath(enemyPath) {
+    render.addEnemyPath(enemyPath);
+    game.addEnemyPath(enemyPath);
+}
+function initTower(tower) {
+    render.addTower(tower);
+    game.addTower(tower);
+}
+function initEnemy(enemy) {
+    render.addEnemy(enemy);
+    game.addEnemy(enemy);
+}
