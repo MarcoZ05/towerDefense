@@ -64,7 +64,7 @@ export default class Render {
   addProjectile (projectile: ProjectileClass): void {
     this.projectiles.push({
       position: projectile.position,
-      size: projectile.size
+      size: projectile.attack.size
     })
   }
 
