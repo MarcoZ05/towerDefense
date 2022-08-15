@@ -48,10 +48,6 @@ export default class TowerClass {
 
   shootProjectile (enemies: Array<EnemyClass> = [], game: Game): void {
     // TODO: attack enemy/-ies, check type...
-    switch (this.attack.type) {
-      case "nonTracking":
-        
-        
   }
 
   onclick (): void {}
