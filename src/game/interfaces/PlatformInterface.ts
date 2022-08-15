@@ -5,4 +5,5 @@ export interface PlatformInterface {
   width: number
   height: number
   type: 'ground' | 'water' | 'obstacle'
+  image: HTMLImageElement
 }

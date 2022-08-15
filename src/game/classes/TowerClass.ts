@@ -1,3 +1,4 @@
+import Game from '../game/Game'
 import {
   AttackInterface,
   LevelInterface,
@@ -45,10 +46,12 @@ export default class TowerClass {
       '.png'
   }
 
-  shootProjectile (enemies: Array<EnemyClass> = []): void {
-    const enemiesInRange = this.enemiesInRange(enemies)
-
+  shootProjectile (enemies: Array<EnemyClass> = [], game: Game): void {
     // TODO: attack enemy/-ies, check type...
+    switch (this.attack.type) {
+      case "nonTracking":
+        
+        
   }
 
   onclick (): void {}

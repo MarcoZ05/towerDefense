@@ -5,6 +5,10 @@ import TowerClass from '../classes/TowerClass.js'
 import { RenderObjectInterface, PositionInterface } from '../interfaces.js'
 
 export default class Render {
+  canvas: HTMLCanvasElement
+  hpSpan: HTMLSpanElement
+  wavesSpan: HTMLSpanElement
+  moneySpan: HTMLSpanElement
   towers: RenderObjectInterface[] = []
   enemies: RenderObjectInterface[] = []
   map: MapClass = {} as MapClass
@@ -12,8 +16,19 @@ export default class Render {
     position: PositionInterface
     size: number
   }[] = []
+  constructor (
+    canvas: HTMLCanvasElement,
+    hpSpan: HTMLSpanElement,
+    wavesSpan: HTMLSpanElement,
+    moneySpan: HTMLSpanElement
+  ) {
+    this.canvas = canvas
+    this.hpSpan = hpSpan
+    this.wavesSpan = wavesSpan
+    this.moneySpan = moneySpan
+  }
 
-  addMap (map: MapClass): void {
+  setMap (map: MapClass): void {
     this.map = map
   }
 
@@ -36,6 +51,15 @@ export default class Render {
 
     this.enemies.push(renderObject)
   }
+  deleteEnemy (enemy: EnemyClass): void {
+    const renderObject = {} as RenderObjectInterface
+    renderObject.position = enemy.position
+    renderObject.image = enemy.image
+    renderObject.width = enemy.width
+    renderObject.height = enemy.height
+
+    this.enemies.splice(this.enemies.indexOf(renderObject), 1)
+  }
 
   addProjectile (projectile: ProjectileClass): void {
     this.projectiles.push({
@@ -44,12 +68,34 @@ export default class Render {
     })
   }
 
-  async render (canvas: HTMLCanvasElement): Promise<void> {
-    const ctx = canvas.getContext('2d') as CanvasRenderingContext2D
-    ctx.clearRect(0, 0, canvas.width, canvas.height)
+  async render (): Promise<void> {
+    const ctx = this.canvas.getContext('2d') as CanvasRenderingContext2D
+    ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
     ctx.imageSmoothingEnabled = false
 
-    //TODO: render map
+    this.map.platforms.forEach(platform => {
+      ctx.fillStyle = ctx.createPattern(
+        platform.image,
+        'repeat'
+      ) as CanvasPattern
+      ctx.fillRect(
+        platform.position.x,
+        platform.position.y,
+        platform.width,
+        platform.height
+      )
+    })
+
+    this.map.path.forEach((point, i) => {
+      if (i === 0) {
+        ctx.beginPath()
+        ctx.lineWidth = 50
+        ctx.moveTo(point.x, point.y)
+      } else {
+        ctx.lineTo(point.x, point.y)
+      }
+    })
+    ctx.stroke()
 
     this.towers.forEach(async renderObject => {
       ctx.drawImage(
