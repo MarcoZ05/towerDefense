@@ -5,6 +5,7 @@ import {
   PositionInterface
 } from '../interfaces'
 import EnemyClass from './EnemyClass'
+import ProjectileClass from './ProjectileClass'
 
 export default class TowerClass {
   position: PositionInterface
@@ -48,6 +49,41 @@ export default class TowerClass {
 
   shootProjectile (enemies: Array<EnemyClass> = [], game: Game): void {
     // TODO: attack enemy/-ies, check type...
+    const enemiesInRange = this.enemiesInRange(enemies)
+
+    switch (this.attack.type) {
+      case 'set':
+        this.attack.setAngles.forEach(angle => {
+          game.addProjectile(
+            new ProjectileClass(angle, this.position, this.attack)
+          )
+        })
+        break
+      case 'all':
+        enemiesInRange.forEach(enemy => {
+          game.addProjectile(
+            new ProjectileClass(
+              this.getAngle(enemy),
+              this.position,
+              this.attack
+            )
+          )
+        })
+        break
+        case "first":
+          const firstEnemy = enemiesInRange.filter((enemy, index) => index === 0){
+            
+          }
+
+          game.addProjectile(
+            new ProjectileClass(
+              this.getAngle(firstEnemy),
+              this.position,
+              this.attack
+            )
+          )
+          break
+    }
   }
 
   onclick (): void {}
@@ -61,5 +97,12 @@ export default class TowerClass {
         ) <= this.attack.range
       )
     })
+  }
+
+  getAngle (enemy: EnemyClass): number {
+    return Math.atan2(
+      enemy.position.y - this.position.y,
+      enemy.position.x - this.position.x
+    )
   }
 }
