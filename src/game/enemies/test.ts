@@ -2,12 +2,12 @@ import EnemyClass from '../classes/EnemyClass.js'
 import { PositionInterface } from '../interfaces'
 
 export class test extends EnemyClass {
-  constructor (position: PositionInterface) {
+  constructor (position: PositionInterface, id: number) {
     super(
       position,
       50,
       50,
-      10,
+      1,
       'test',
       'test',
       3,
@@ -19,7 +19,8 @@ export class test extends EnemyClass {
           iron: false
         }
       },
-      []
+      [],
+      id
     )
   }
 }

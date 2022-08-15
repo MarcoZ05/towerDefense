@@ -56,26 +56,12 @@ const path: PositionInterface[] = [
     y: 750
   }
 ]
-const waves: EnemyClass[][] = [
-  [
-    new enemies.test({ x: path[0].x, y: path[0].y }),
-    new enemies.test({ x: path[0].x - 25, y: path[0].y }),
-    new enemies.test({ x: path[0].x - 50, y: path[0].y }),
-    new enemies.test({ x: path[0].x - 75, y: path[0].y }),
-    new enemies.test({ x: path[0].x - 100, y: path[0].y }),
-  ],
-  [
-    new enemies.test({ x: path[0].x, y: path[0].y }),
-    new enemies.test({ x: path[0].x - 10, y: path[0].y }),
-    new enemies.test({ x: path[0].x - 20, y: path[0].y }),
-    new enemies.test({ x: path[0].x - 30, y: path[0].y }),
-    new enemies.test({ x: path[0].x - 40, y: path[0].y }),
-    new enemies.test({ x: path[0].x - 50, y: path[0].y }),
-    new enemies.test({ x: path[0].x - 60, y: path[0].y }),
-    new enemies.test({ x: path[0].x - 70, y: path[0].y }),
-    new enemies.test({ x: path[0].x - 80, y: path[0].y }),
-    new enemies.test({ x: path[0].x - 90, y: path[0].y }),
-  ]
-]
+const waves: EnemyClass[][] = [[],[]]
+for (let i = 0; i < 5; i++) {
+  waves[0].push(new enemies.test({ x: path[0].x - 25 * i, y: path[0].y }, i))
+}
+for (let i = 0; i < 10; i++) {
+  waves[1].push(new enemies.test({ x: path[0].x - 10 * i, y: path[0].y }, i+5))
+}
 
-export const loop = new MapClass(platforms, path, 'plains', waves)
+export const loop = new MapClass(platforms, path, 'loop', waves)

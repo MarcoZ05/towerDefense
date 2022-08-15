@@ -1,3 +1,5 @@
+import { PositionInterface } from "./PositionInterface"
+
 export type AttackInterface = setAttackInterface | trackingAttackInterface
 
 interface basicAttackInterface {
@@ -7,10 +9,7 @@ interface basicAttackInterface {
   delay: number
   size: number
   projectiles: number
-  duration: {
-    time: number
-    enemies: number
-  }
+  durability: number
   special: {
     camouflage: boolean
     iron: boolean
@@ -19,7 +18,7 @@ interface basicAttackInterface {
 
 interface setAttackInterface extends basicAttackInterface {
   type: 'set'
-  setAngles: number[]
+  setDeltaPostions: PositionInterface[]
 }
 
 interface trackingAttackInterface extends basicAttackInterface {

@@ -6,4 +6,5 @@ export interface RenderObjectInterface {
   height: number
   image: HTMLImageElement
   radius?: number
+  id?: number
 }

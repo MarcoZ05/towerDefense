@@ -3,6 +3,7 @@ import Render from './render/Render.js'
 import Game from './game/Game.js'
 import MapClass from './classes/MapClass.js'
 import * as Maps from './maps.js'
+import * as towers from './towers.js'
 
 const hpSpan = document.getElementById('hp') as HTMLSpanElement
 const moneySpan = document.getElementById('money') as HTMLSpanElement
@@ -18,6 +19,9 @@ const game = new Game(render)
 let mapLoaded: boolean = false
 const map: MapClass = Maps.loop
 initMap(map)
+
+const testTower = new towers.test({x: 100, y: 100})
+game.addTower(testTower)
 
 // Renderings
 let passedRenderSeconds: number = 0

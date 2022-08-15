@@ -48,17 +48,15 @@ export default class Render {
     renderObject.image = enemy.image
     renderObject.width = enemy.width
     renderObject.height = enemy.height
+    renderObject.id = enemy.id
 
     this.enemies.push(renderObject)
   }
   deleteEnemy (enemy: EnemyClass): void {
-    const renderObject = {} as RenderObjectInterface
-    renderObject.position = enemy.position
-    renderObject.image = enemy.image
-    renderObject.width = enemy.width
-    renderObject.height = enemy.height
-
-    this.enemies.splice(this.enemies.indexOf(renderObject), 1)
+    this.enemies = this.enemies.filter(renderObject => {
+      return renderObject.id !== enemy.id
+    })
+    //TODO: enemy pop effect
   }
 
   addProjectile (projectile: ProjectileClass): void {
@@ -66,6 +64,15 @@ export default class Render {
       position: projectile.position,
       size: projectile.attack.size
     })
+  }
+  deleteProjectile (projectile: ProjectileClass): void {
+    this.projectiles.splice(
+      this.projectiles.indexOf({
+        position: projectile.position,
+        size: projectile.attack.size
+      }),
+      1
+    )
   }
 
   async render (): Promise<void> {
@@ -119,14 +126,13 @@ export default class Render {
 
     this.projectiles.forEach(async renderObject => {
       ctx.beginPath()
-      ctx.arc(
+      ctx.fillStyle = 'red'
+      ctx.fillRect(
         renderObject.position.x,
         renderObject.position.y,
         renderObject.size,
-        0,
-        Math.PI * 2
+        renderObject.size
       )
-      ctx.fill()
       ctx.stroke()
     })
 

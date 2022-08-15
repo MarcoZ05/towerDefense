@@ -13,6 +13,7 @@ export default class EnemyClass {
   health: HealthInterface
   image: HTMLImageElement = new Image()
   popEnemies: EnemyClass[] = []
+  id: number
   constructor (
     position: PositionInterface,
     height: number,
@@ -22,7 +23,8 @@ export default class EnemyClass {
     description: string,
     money: number,
     health: HealthInterface,
-    popEnemies: EnemyClass[]
+    popEnemies: EnemyClass[],
+    id: number
   ) {
     this.position = position
     this.height = height
@@ -34,6 +36,7 @@ export default class EnemyClass {
     this.health = health
     this.image.src = './assets/images/enemies/' + name + '.jpg'
     this.popEnemies = popEnemies
+    this.id = id
   }
 
   pop (game: Game): void {}
@@ -81,7 +84,6 @@ export default class EnemyClass {
             : thisCheckPoint.y > this.position.y
             ? 1
             : 0
-        this.pathCheckPoint = 0
       } else {
         this.position.x +=
           nextCheckPoint.x < this.position.x
