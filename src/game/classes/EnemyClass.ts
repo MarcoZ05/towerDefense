@@ -81,6 +81,7 @@ export default class EnemyClass {
             : thisCheckPoint.y > this.position.y
             ? 1
             : 0
+        this.pathCheckPoint = 0
       } else {
         this.position.x +=
           nextCheckPoint.x < this.position.x
