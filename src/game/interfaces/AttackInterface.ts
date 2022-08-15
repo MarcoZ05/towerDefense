@@ -12,6 +12,7 @@ export interface AttackInterface {
     | 'furthest'
     | 'weakest'
     | 'strongest'
+  setAngle?: number
   delay: number
   size: number
   projectiles: number
