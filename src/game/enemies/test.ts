@@ -7,10 +7,10 @@ export class test extends EnemyClass {
       position,
       50,
       50,
+      5,
+      'test',
+      'test',
       1,
-      'test',
-      'test',
-      3,
       {
         current: 1,
         max: 1,

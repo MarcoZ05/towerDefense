@@ -26,9 +26,9 @@ for (const [key, value] of Object.entries(Maps)) {
   mapCanvas.width = CANVAS_WIDTH
   mapCanvas.height = CANVAS_HEIGHT
   //TODO: Rendering MapSelection
-  // const render = new Render(mapCanvas)
-  // render.setMap(value)
-  // render.render()
+  const render = new Render(mapCanvas)
+  render.setMap(value)
+  render.render()
 
   mapContainer.appendChild(mapCanvas)
   mapsContainer.appendChild(mapContainer)

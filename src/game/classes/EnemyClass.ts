@@ -47,6 +47,11 @@ export default class EnemyClass {
       const nextCheckPoint = enemiesPath[this.pathCheckPoint]
 
       if (this.pathCheckPoint >= enemiesPath.length) {
+        console.log(this.health.current);
+        console.log(game.hp)
+        console.log("");
+        
+        
         game.hp -= this.health.current
         game.deleteEnemy(this)
         return

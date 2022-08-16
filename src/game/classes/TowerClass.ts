@@ -16,7 +16,7 @@ export default class TowerClass {
   description: string
   leveling: LevelInterface[][]
   image: HTMLImageElement = new Image()
-  delayTicks: number
+  delayTicks: number = 0
   constructor (
     position: PositionInterface,
     height: number,
@@ -35,7 +35,6 @@ export default class TowerClass {
     this.name = name
     this.description = description
     this.leveling = leveling
-    this.delayTicks = attack.delay
     this.image.src =
       './assets/images/towers/' +
       name +
@@ -48,7 +47,10 @@ export default class TowerClass {
       '.jpg'
   }
 
-  shootProjectile (enemies: EnemyClass[] = [], game: Game): PositionInterface[] {
+  shootProjectile (
+    enemies: EnemyClass[] = [],
+    game: Game
+  ): PositionInterface[] {
     // TODO: attack enemy/-ies, check type...
     if (this.delayTicks < this.attack.delay || enemies.length === 0) {
       this.delayTicks++
@@ -60,12 +62,11 @@ export default class TowerClass {
         (enemy.health.special.camouflage === false ||
           this.attack.special.camouflage === true) &&
         (enemy.health.special.iron === false ||
-          this.attack.special.iron === true)
-      ) && (
+          this.attack.special.iron === true) &&
         enemy.position.x < game.renderer.canvas.width &&
-        enemy.position.x > 0 &&
-        enemy.position.y < game.renderer.canvas.height &&
-        enemy.position.y > 0
+          enemy.position.x > 0 &&
+          enemy.position.y < game.renderer.canvas.height &&
+          enemy.position.y > 0
       )
     })
 
@@ -79,7 +80,9 @@ export default class TowerClass {
         shotDeltaPostions = this.attack.setDeltaPostions
         break
       case 'all':
-        shotDeltaPostions = enemiesInRange.map(enemy => this.getDeltaPosition(enemy))
+        shotDeltaPostions = enemiesInRange.map(enemy =>
+          this.getDeltaPosition(enemy)
+        )
         break
       case 'nearest':
         const nearestEnemies = enemiesInRange.sort((a, b) => {
@@ -181,10 +184,19 @@ export default class TowerClass {
       x: enemy.position.x - this.position.x,
       y: enemy.position.y - this.position.y
     }
-    // adjust to speed
-    const speed = this.attack.speed 
-    const speedX = deltaPosition.x / Math.sqrt(Math.pow(deltaPosition.x, 2) + Math.pow(deltaPosition.y, 2)) * speed
-    const speedY = deltaPosition.y / Math.sqrt(Math.pow(deltaPosition.x, 2) + Math.pow(deltaPosition.y, 2)) * speed
+    const speed = this.attack.speed
+    const speedX =
+      (deltaPosition.x /
+        Math.sqrt(
+          Math.pow(deltaPosition.x, 2) + Math.pow(deltaPosition.y, 2)
+        )) *
+      speed
+    const speedY =
+      (deltaPosition.y /
+        Math.sqrt(
+          Math.pow(deltaPosition.x, 2) + Math.pow(deltaPosition.y, 2)
+        )) *
+      speed
     return {
       x: speedX,
       y: speedY

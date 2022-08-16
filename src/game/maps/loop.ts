@@ -60,8 +60,15 @@ const waves: EnemyClass[][] = [[],[]]
 for (let i = 0; i < 5; i++) {
   waves[0].push(new enemies.test({ x: path[0].x - 25 * i, y: path[0].y }, i))
 }
+waves[0].push(new enemies.test({ x: path[0].x - 2500, y: path[0].y }, 6))
 for (let i = 0; i < 10; i++) {
-  waves[1].push(new enemies.test({ x: path[0].x - 10 * i, y: path[0].y }, i+5))
+  waves[1].push(new enemies.test({ x: path[0].x - 10 * i, y: path[0].y }, i+6))
+}
+for (let i = 0; i < 15; i++) {
+  waves[1].push(new enemies.test({ x: path[0].x - 25 * i, y: path[0].y }, i+16))
+}
+for (let i = 0; i < 15; i++) {
+  waves[1].push(new enemies.test({ x: path[0].x - 25 * i, y: path[0].y }, i+31))
 }
 
 export const loop = new MapClass(platforms, path, 'loop', waves)

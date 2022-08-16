@@ -32,17 +32,18 @@ export default class ProjectileClass {
           this.position.x <= enemies[j].position.x + enemies[j].width &&
           this.position.x + this.attack.size >= enemies[j].position.x &&
           this.position.y <= enemies[j].position.y + enemies[j].height &&
-          this.position.y + this.attack.size >= enemies[j].position.y
+          this.position.y + this.attack.size >= enemies[j].position.y &&
+          this.attack.durability > 0
         ) {
-          if (this.attack.durability > 0) hittedEnemies.push(enemies[j])
+          hittedEnemies.push(enemies[j])
           this.attack.durability--
         }
       }
 
       if (
         this.attack.durability <= 0 ||
-        this.position.x + this.attack.size < 0 ||
-        this.position.x > game.renderer.canvas.width ||
+        this.position.x + this.attack.size <= 0 ||
+        this.position.x >= game.renderer.canvas.width ||
         this.position.y + this.attack.size < 0 ||
         this.position.y > game.renderer.canvas.height ||
         game.map.platforms.some(platform => {
@@ -54,11 +55,8 @@ export default class ProjectileClass {
             platform.type === 'obstacle'
           )
         })
-      ) {
-        console.log('destroy');
-        
+      )
         return { enemies: hittedEnemies, destroy: true }
-      }
     }
     return { enemies: hittedEnemies, destroy: false }
   }

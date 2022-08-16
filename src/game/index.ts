@@ -5,7 +5,7 @@ import MapClass from './classes/MapClass.js'
 import * as Maps from './maps.js'
 import * as towers from './towers.js'
 
-const hpSpan = document.getElementById('hp') as HTMLSpanElement
+const hpSpan = document.getElementById('health') as HTMLSpanElement
 const moneySpan = document.getElementById('money') as HTMLSpanElement
 const waveSpan = document.getElementById('wave') as HTMLSpanElement
 

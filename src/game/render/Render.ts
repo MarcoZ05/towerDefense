@@ -18,9 +18,9 @@ export default class Render {
   }[] = []
   constructor (
     canvas: HTMLCanvasElement,
-    hpSpan: HTMLSpanElement,
-    wavesSpan: HTMLSpanElement,
-    moneySpan: HTMLSpanElement
+    hpSpan: HTMLSpanElement = document.createElement('span'),
+    wavesSpan: HTMLSpanElement = document.createElement('span'),
+    moneySpan: HTMLSpanElement = document.createElement('span')
   ) {
     this.canvas = canvas
     this.hpSpan = hpSpan
@@ -53,9 +53,11 @@ export default class Render {
     this.enemies.push(renderObject)
   }
   deleteEnemy (enemy: EnemyClass): void {
-    this.enemies = this.enemies.filter(renderObject => {
-      return renderObject.id !== enemy.id
-    })
+    // delete enemy with same id
+    this.enemies.splice(
+      this.enemies.findIndex(e => e.id === enemy.id),
+      1
+    )
     //TODO: enemy pop effect
   }
 
@@ -137,5 +139,15 @@ export default class Render {
     })
 
     ctx.closePath()
+  }
+
+  updateStats (
+    hp: number,
+    waves: { current: number; max: number },
+    money: number
+  ): void {
+    this.hpSpan.innerHTML = `HP: ${hp}`
+    this.wavesSpan.innerHTML = `Waves: ${waves.current} / ${waves.max}`
+    this.moneySpan.innerHTML = `Money: ${money}`
   }
 }

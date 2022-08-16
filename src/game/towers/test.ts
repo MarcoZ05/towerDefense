@@ -10,9 +10,9 @@ export class test extends TowerClass {
       {
         type: 'first',
         damage: 1,
-        speed: 2,
+        speed: 10,
         range: 250,
-        delay: 25,
+        delay: 100,
         size: 25,
         projectiles: 1,
         durability: 100,

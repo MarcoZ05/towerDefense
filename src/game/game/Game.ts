@@ -38,18 +38,16 @@ export default class Game {
   }
 
   addProjectile (projectile: ProjectileClass) {
-    this.projectilesId++
     this.projectiles.push(projectile)
     this.renderer.addProjectile(projectile)
+    this.projectilesId++
   }
   deleteProjectile (projectile: ProjectileClass) {
     this.projectiles = this.projectiles.filter(p => p.id !== projectile.id)
-    console.log(this.projectiles);
-    
     this.renderer.deleteProjectile(projectile)
   }
 
-  update () {
+  update (): void {
     //TODO: game logic
     if (this.hp <= 0) {
       //TODO: game over
@@ -60,7 +58,7 @@ export default class Game {
 
       if (this.wave >= this.map.waves.length) {
         //TODO: win
-        return true
+        return
       } else
         this.map.waves[this.wave].forEach(enemy => {
           this.addEnemy(enemy)
@@ -72,11 +70,13 @@ export default class Game {
 
     this.towers.forEach(tower => {
       tower.shootProjectile(this.enemies, this).forEach(shotDeltaPostion => {
-        
         this.addProjectile(
           new ProjectileClass(
             shotDeltaPostion,
-            { x: tower.position.x, y: tower.position.y },
+            {
+              x: tower.position.x + tower.width / 2,
+              y: tower.position.y + tower.height / 2
+            },
             tower.attack,
             this.projectilesId
           )
@@ -84,9 +84,6 @@ export default class Game {
       })
     })
 
-    console.log("");
-    console.log(this.projectiles)
-    
     this.projectiles.forEach(projectile => {
       const data = projectile.move(this)
       if (data.destroy) this.deleteProjectile(projectile)
@@ -94,10 +91,21 @@ export default class Game {
         this.coins += enemy.money
         this.deleteEnemy(enemy)
       })
-      console.log(projectile.id);
-      
     })
 
-    
+    this.renderer.updateStats(
+      this.hp,
+      { current: this.wave, max: this.map.waves.length },
+      this.coins
+    )
+
+    // console.log('Enemies:', this.enemies.length, this.renderer.enemies.length)
+    // console.log(
+    //   'Projectiles:',
+    //   this.projectiles.length,
+    //   this.renderer.projectiles.length
+    // )
+    // console.log(this.projectiles)
+    // console.log('')
   }
 }

@@ -1,5 +1,3 @@
 ERRORS:
-- Game gets stuck
-- Projectiles never destroy
+- last Projectile destroy with first Projectile (PS: IDK WHY)
 - Projectiles are not created in center of the tower
-- PROJECTILES F*CK OFF
